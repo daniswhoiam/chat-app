@@ -1,3 +1,4 @@
+// Import packages
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -7,12 +8,21 @@ import {
   ImageBackground,
   TouchableOpacity
 } from 'react-native';
+
+// Import SVG as custom component for easier handling
 import UserIcon from '../assets/user_icon.svg';
 
+/**
+ * Main component that user sees when starting the App. Here, the user can set a username and a custom color.
+ *
+ * @param {Object} props Contains navigation
+ * @returns Rendered Start Component
+ */
 export default function Start(props) {
   const [name, setName] = useState('');
   const [color, setColor] = useState('');
 
+  // The colors from which the user can select.
   const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
 
   return (
@@ -21,28 +31,25 @@ export default function Start(props) {
       source={require('../assets/background.png')}
     >
       <Text style={styles.mainHeader}>Chat-App</Text>
-      <View style={styles.controlContainer}>
-        <View style={styles.nameInput}>
+      <View style={[styles.controlStyles, styles.controlContainer]}>
+        <View style={[styles.controlStyles, styles.nameInput]}>
+          {/* SVG as custom component UserIcon */}
           <UserIcon width={16} height={32} />
           <TextInput
             value={name}
             onChangeText={setName}
             placeholder="Your name"
-            style={[styles.nameInputText, { marginLeft: 5 }]}
+            style={[styles.standardText, styles.nameInputText]}
           />
         </View>
-        <View style={styles.colorContainer}>
-          <Text
-            style={[
-              styles.nameInputText,
-              { opacity: 1, alignSelf: 'flex-start' }
-            ]}
-          >
+        <View style={styles.controlStyles}>
+          <Text style={[styles.standardText, { alignSelf: 'flex-start' }]}>
             Choose Your Background Color:
           </Text>
-          <View style={styles.colors}>
+          <View style={[styles.controlStyles, styles.colors]}>
             {colors.map((arrayColor, index) => {
               return (
+                /* Enables to maintain a frame around the selected color */
                 <View
                   key={index}
                   style={
@@ -55,6 +62,7 @@ export default function Start(props) {
                       : styles.colorFrame
                   }
                 >
+                  {/* Color buttons - as TouchableOpacity for styling flexibility */}
                   <TouchableOpacity
                     style={[
                       styles.colorButton,
@@ -73,9 +81,11 @@ export default function Start(props) {
           onPress={() => props.navigation.navigate('Chat', { name, color })}
           title="Start Chatting"
           accessibilityLabel="Press here to start chatting"
-          style={styles.startChatting}
+          style={[styles.controlStyles, styles.startChatting]}
         >
-          <Text style={styles.startChattingText}>Start Chatting</Text>
+          <Text style={(styles.standardText, { color: '#ffffff' })}>
+            Start Chatting
+          </Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -94,34 +104,33 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#ffffff'
   },
-  controlContainer: {
+  standardText: {
+    fontSize: 16,
+    fontWeight: '300',
+    color: '#757083'
+  },
+  controlStyles: {
     width: '88%',
+    alignItems: 'center'
+  },
+  controlContainer: {
     height: '44%',
     backgroundColor: '#fff',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'space-around'
   },
   nameInput: {
     flexDirection: 'row',
-    width: '88%',
     borderWidth: 1,
     borderColor: 'grey',
     padding: 10
   },
   nameInputText: {
-    fontSize: 16,
-    fontWeight: '300',
-    color: '#757083',
+    marginLeft: 5,
     opacity: 0.5
-  },
-  colorContainer: {
-    alignItems: 'center',
-    width: '88%'
   },
   colors: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '88%',
     marginTop: 10
   },
   colorButton: {
@@ -142,14 +151,7 @@ const styles = StyleSheet.create({
   },
   startChatting: {
     backgroundColor: '#757083',
-    width: '88%',
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  startChattingText: {
-    fontSize: 16,
-    fontWeight: '300',
-    color: '#ffffff'
+    justifyContent: 'center'
   }
 });

@@ -13,6 +13,11 @@ const Stack = createStackNavigator();
 import Start from './components/Start';
 import Chat from './components/Chat';
 
+/**
+ * Main component that displays all other components
+ * 
+ * @returns Application Interface
+ */
 export default function App() {
   return (
     <NavigationContainer>
@@ -25,6 +30,7 @@ export default function App() {
         <Stack.Screen
           name="Chat"
           component={Chat}
+          /* Proper way to set navigation bar heading with the user's name */
           options={props => ({ title: props.route.params.name })}
         />
       </Stack.Navigator>

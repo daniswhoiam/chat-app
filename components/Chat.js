@@ -17,7 +17,7 @@ export default function Chat(props) {
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
 
-  // Euqivalent to componentDidMount()
+  // Equivalent to componentDidMount()
   useEffect(() => {
     let unsubscribeMessages = () => {};
     // Authentication of the user

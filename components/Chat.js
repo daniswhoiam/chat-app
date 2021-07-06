@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Platform, KeyboardAvoidingView, Text } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { db, auth } from '../firebase';
 
 /**
@@ -60,6 +61,7 @@ export default function Chat(props) {
       }
     };
     db.collection('messages').add(message);
+    saveMessages();
   };
 
   /**
@@ -83,6 +85,33 @@ export default function Chat(props) {
       });
     });
     setMessages(allMessages);
+  };
+
+  const getMessages = async () => {
+    let storedMessages = '';
+    try {
+      storedMessages = (await AsyncStorage.getItem('messages')) || [];
+      setMessages(JSON.parse(storedMessages));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const saveMessages = async () => {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(messages));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const deleteMessages = async () => {
+    try {
+      await AsyncStorage.removeItem('messages');
+      setMessages([]);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (

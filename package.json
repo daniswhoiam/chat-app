@@ -24,7 +24,9 @@
     "react-native-screens": "~3.0.0",
     "react-native-svg": "12.1.0",
     "react-native-web": "^0.17.1",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "@react-native-async-storage/async-storage": "^1.13.0",
+    "@react-native-community/netinfo": "6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
 // Internal modules
 import { db, auth } from '../firebase';
+import CustomActions from './CustomActions';
 
 /**
  * This is the view that enables the main function of the app, which is chatting.
@@ -145,6 +146,10 @@ export default function Chat(props) {
     }
   };
 
+  const renderCustomActions = async actionProps => {
+    return <CustomActions {...actionProps} />;
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: `${props.route.params.color}` }}>
       <GiftedChat
@@ -170,6 +175,7 @@ export default function Chat(props) {
             return <InputToolbar {...props} />;
           }
         }}
+        renderActions={renderCustomActions}
       />
       {Platform.OS === 'android' ? (
         <KeyboardAvoidingView behavior="height" />

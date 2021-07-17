@@ -6,9 +6,11 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import firebase from 'firebase';
-import firestore from 'firebase';
 
 export default class CustomActions extends React.Component {
+  /**
+   * Lets user send image from his library
+   */
   imagePicker = async () => {
     const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
     try {
@@ -26,6 +28,9 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * Lets user take a picture with his camera and send it
+   */
   takePhoto = async () => {
     const { status } = await Permissions.askAsync(
       Permissions.CAMERA,
@@ -46,6 +51,12 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * Uploads the image to Firebase
+   *
+   * @param {String} uri Local path to image
+   * @returns Promise to receive path to image in storage
+   */
   uploadImageFetch = async uri => {
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -72,6 +83,9 @@ export default class CustomActions extends React.Component {
     return await snapshot.ref.getDownloadURL();
   };
 
+  /**
+   * Lets user send his current location
+   */
   getLocation = async () => {
     const { status } = await Permissions.askAsync(
       Permissions.LOCATION_FOREGROUND
@@ -100,6 +114,9 @@ export default class CustomActions extends React.Component {
     }
   };
 
+  /**
+   * Opens action sheet to choose an action
+   */
   onActionPress = () => {
     const options = [
       'Choose from Library',

@@ -151,10 +151,22 @@ export default function Chat(props) {
     }
   };
 
+  /**
+   * Renders CustomAction Button
+   *
+   * @param {Object} actionProps Props from GiftedChat component
+   * @returns Renders CustomActions component
+   */
   const renderCustomActions = actionProps => {
     return <CustomActions {...actionProps} />;
   };
 
+  /**
+   * Enables to show a map to display the sent/received location
+   *
+   * @param {Object} customViewProps Props from GiftedChat component
+   * @returns Renders MapView component or nothing if message does not contain location info
+   */
   const renderCustomView = customViewProps => {
     const { currentMessage } = customViewProps;
     if (currentMessage.location) {

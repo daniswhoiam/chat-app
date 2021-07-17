@@ -7,6 +7,7 @@ import NetInfo from '@react-native-community/netinfo';
 // Internal modules
 import { db, auth } from '../firebase';
 import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 /**
  * This is the view that enables the main function of the app, which is chatting.
@@ -81,7 +82,9 @@ export default function Chat(props) {
       user: {
         _id: user,
         name: props.route.params.name
-      }
+      },
+      image: newMessage[0].image || null,
+      location: newMessage[0].location || null
     };
     // Push message to firestore
     db.collection('messages').add(message);
@@ -104,7 +107,9 @@ export default function Chat(props) {
         user: {
           _id: data.user._id,
           name: data.user.name
-        }
+        },
+        image: data.image || null,
+        location: data.location || null
       });
     });
     setMessages(allMessages);
@@ -146,8 +151,26 @@ export default function Chat(props) {
     }
   };
 
-  const renderCustomActions = async actionProps => {
+  const renderCustomActions = actionProps => {
     return <CustomActions {...actionProps} />;
+  };
+
+  const renderCustomView = customViewProps => {
+    const { currentMessage } = customViewProps;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -176,6 +199,7 @@ export default function Chat(props) {
           }
         }}
         renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
       />
       {Platform.OS === 'android' ? (
         <KeyboardAvoidingView behavior="height" />

@@ -1,7 +1,7 @@
 # chat-app
 
 The chat-app is a chatting application for mobile devices using React Native. Users can chat, share images, and share their location.
-![chat-app start screen](https://daniswhoiam.github.io/portfolio-website/img/chatapp.png)
+<img src="https://daniswhoiam.github.io/portfolio-website/img/chatapp.png" alt="chat-app start screen" width="200"/>
 #### Table of Contents
 
 - [Objective](#Objective)
